@@ -11,19 +11,15 @@
     <div class="phone-frame">
       <div class="phone-screen">
         <header class="topbar">
-          <div>
-            <h1>Snake Math Siege</h1>
-          </div>
           <button id="restartButton" class="secondary-button" type="button">Restart</button>
         </header>
 
         <section class="snake-panel">
           <div class="snake-header">
-            <span>Snake</span>
             <span id="segmentsLeft">0 segments left</span>
           </div>
           <div class="target-post-wrap">
-            <div class="target-post">Target Post</div>
+            <div class="target-post"></div>
           </div>
           <div id="snakeTrack" class="snake-track" aria-label="Snake track"></div>
         </section>
@@ -40,6 +36,15 @@
         <section class="action-panel">
           <button id="submitButton" class="primary-button" type="button">Submit Path</button>
           <button id="clearButton" class="secondary-button" type="button">Clear</button>
+        </section>
+
+        <section id="endOverlay" class="end-overlay hidden" aria-live="polite">
+          <div class="end-card">
+            <p id="endEyebrow" class="end-eyebrow">Result</p>
+            <h2 id="endTitle" class="end-title">You Win</h2>
+            <p id="endMessage" class="end-message">All snake segments are cleared.</p>
+            <button id="overlayRestartButton" class="primary-button" type="button">Restart</button>
+          </div>
         </section>
       </div>
     </div>

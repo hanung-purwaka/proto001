@@ -19,8 +19,8 @@
   --cell-path: rgba(255, 95, 151, 0.16);
   --grid-line: rgba(166, 125, 165, 0.12);
   --shadow: 0 24px 56px rgba(178, 115, 145, 0.24);
-  --phone-width: 390px;
-  --phone-height: 844px;
+  --phone-width: 390;
+  --phone-height: 844;
 }
 
 * {
@@ -45,15 +45,14 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 12px;
   overflow: auto;
 }
 
 .phone-frame {
-  width: var(--phone-width);
-  min-width: var(--phone-width);
-  height: var(--phone-height);
-  min-height: var(--phone-height);
+  width: min(100%, calc((100svh - 24px) * (var(--phone-width) / var(--phone-height))));
+  height: min(calc(100svh - 24px), calc((100vw - 24px) * (var(--phone-height) / var(--phone-width))));
+  aspect-ratio: calc(var(--phone-width) / var(--phone-height));
   border-radius: 34px;
   padding: 10px;
   background:
@@ -90,7 +89,8 @@ body {
 .topbar,
 .snake-panel,
 .board-panel,
-.action-panel {
+.action-panel,
+.end-overlay {
   position: relative;
   z-index: 1;
 }
@@ -163,7 +163,7 @@ h1 {
 
 .snake-track {
   position: relative;
-  min-height: 132px;
+  min-height: clamp(108px, 18vh, 132px);
   border-radius: 18px;
   overflow: hidden;
   background:
@@ -186,13 +186,13 @@ h1 {
 .snake-segment {
   position: absolute;
   top: 50%;
-  width: 46px;
-  height: 46px;
+  width: clamp(38px, 5.6vh, 46px);
+  height: clamp(38px, 5.6vh, 46px);
   display: grid;
   place-items: center;
   border-radius: 18px;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: clamp(0.92rem, 2.4vh, 1.1rem);
   color: #fff;
   transform: translate(-50%, -50%);
   background:
@@ -220,7 +220,7 @@ h1 {
 }
 
 .selection-tray {
-  min-height: 52px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -235,8 +235,8 @@ h1 {
 .selection-chip,
 .selection-placeholder {
   flex: 0 0 auto;
-  min-width: 42px;
-  height: 42px;
+  min-width: clamp(36px, 5vh, 42px);
+  height: clamp(36px, 5vh, 42px);
   display: grid;
   place-items: center;
   padding: 0 12px;
@@ -288,10 +288,10 @@ h1 {
   aspect-ratio: 1;
   display: grid;
   place-items: center;
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid var(--grid-line);
   font-weight: 800;
-  font-size: clamp(0.92rem, 2.6vw, 1.1rem);
+  font-size: clamp(0.85rem, 2.1vh, 1.05rem);
   transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
   cursor: pointer;
   pointer-events: auto;
@@ -331,7 +331,7 @@ h1 {
   appearance: none;
   border: 0;
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 11px 14px;
   font: inherit;
   font-weight: 800;
 }
@@ -354,6 +354,108 @@ h1 {
   color: var(--ink);
   background: linear-gradient(180deg, #ffffff, #fff0f6);
   box-shadow: inset 0 -3px 0 rgba(195, 133, 167, 0.14);
+}
+
+.end-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(255, 241, 247, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.end-overlay.hidden {
+  display: none;
+}
+
+.end-card {
+  width: 100%;
+  max-width: 280px;
+  display: grid;
+  gap: 12px;
+  padding: 24px 20px;
+  text-align: center;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 240, 246, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18px 36px rgba(195, 133, 167, 0.2);
+}
+
+.end-eyebrow {
+  margin: 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.end-title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.end-message {
+  margin: 0;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+@media (max-width: 430px), (max-height: 760px) {
+  .page-shell {
+    padding: 8px;
+  }
+
+  .phone-frame {
+    width: min(100%, calc((100svh - 16px) * (var(--phone-width) / var(--phone-height))));
+    height: min(calc(100svh - 16px), calc((100vw - 16px) * (var(--phone-height) / var(--phone-width))));
+    padding: 8px;
+    border-radius: 28px;
+  }
+
+  .phone-screen {
+    gap: 10px;
+    padding: 14px 12px 14px;
+    border-radius: 22px;
+  }
+
+  .phone-screen::before {
+    width: 96px;
+    height: 18px;
+  }
+
+  .snake-panel,
+  .board-panel {
+    padding: 10px;
+  }
+
+  .snake-track {
+    min-height: 108px;
+  }
+
+  .board {
+    gap: 5px;
+  }
+
+  .action-panel {
+    gap: 8px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 10px 12px;
+  }
+
+  .end-card {
+    max-width: 260px;
+    padding: 20px 16px;
+  }
+
+  .end-title {
+    font-size: 1.7rem;
+  }
 }
 
 .status-success {

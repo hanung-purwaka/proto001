@@ -62,6 +62,11 @@ const snakeTrackElement = document.getElementById("snakeTrack");
 const submitButton = document.getElementById("submitButton");
 const clearButton = document.getElementById("clearButton");
 const restartButton = document.getElementById("restartButton");
+const endOverlayElement = document.getElementById("endOverlay");
+const endEyebrowElement = document.getElementById("endEyebrow");
+const endTitleElement = document.getElementById("endTitle");
+const endMessageElement = document.getElementById("endMessage");
+const overlayRestartButton = document.getElementById("overlayRestartButton");
 
 const state = {
   levelIndex: 0,
@@ -175,6 +180,7 @@ function startLevel(levelIndex) {
   state.selectionTokens = [];
   state.gamePhase = "playing";
   state.lastTimestamp = 0;
+  hideEndOverlay();
   buildBoard();
   buildSnake();
   updateStatus("Build an expression that matches any snake segment.", "");
@@ -229,24 +235,28 @@ function endLevel(didWin) {
 
   if (!didWin) {
     state.gamePhase = "lost";
-    updateStatus("The snake head reached the target post. Restart or try the level again.", "status-danger");
+    showEndOverlay("Game Over", "The snake reached the end.", "Game Over");
     return;
   }
 
-  if (state.levelIndex === LEVELS.length - 1) {
-    state.gamePhase = "won";
-    updateStatus("All 5 levels cleared. The prototype win flow is complete.", "status-success");
-    return;
-  }
-
-  state.gamePhase = "transition";
-  updateStatus(`Level ${getLevel().id} cleared. Advancing to level ${getLevel().id + 1}.`, "status-success");
-  window.setTimeout(() => startLevel(state.levelIndex + 1), 1200);
+  state.gamePhase = "won";
+  showEndOverlay("You Win", "All snake segments are cleared.", "Victory");
 }
 
 function updateStatus(message, className) {
   void message;
   void className;
+}
+
+function showEndOverlay(title, message, eyebrow) {
+  endTitleElement.textContent = title;
+  endMessageElement.textContent = message;
+  endEyebrowElement.textContent = eyebrow;
+  endOverlayElement.classList.remove("hidden");
+}
+
+function hideEndOverlay() {
+  endOverlayElement.classList.add("hidden");
 }
 
 function render() {
@@ -698,6 +708,7 @@ clearButton.addEventListener("click", () => {
   render();
 });
 restartButton.addEventListener("click", restartGame);
+overlayRestartButton.addEventListener("click", restartGame);
 boardElement.addEventListener("pointerdown", handleBoardPress);
 
 startLevel(0);
