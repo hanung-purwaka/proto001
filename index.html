@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Snake Math Prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <header class="topbar">
+          <div>
+            <h1>Snake Math Siege</h1>
+          </div>
+          <button id="restartButton" class="secondary-button" type="button">Restart</button>
+        </header>
+
+        <section class="snake-panel">
+          <div class="snake-header">
+            <span>Snake</span>
+            <span id="segmentsLeft">0 segments left</span>
+          </div>
+          <div class="target-post-wrap">
+            <div class="target-post">Target Post</div>
+          </div>
+          <div id="snakeTrack" class="snake-track" aria-label="Snake track"></div>
+        </section>
+
+        <section class="board-panel">
+          <div class="board-header">
+            <span>Expression</span>
+            <span id="selectionValue">Tap to select</span>
+          </div>
+          <div id="selectionTray" class="selection-tray" aria-label="Selected expression"></div>
+          <div id="board" class="board" aria-label="Math board"></div>
+        </section>
+
+        <section class="action-panel">
+          <button id="submitButton" class="primary-button" type="button">Submit Path</button>
+          <button id="clearButton" class="secondary-button" type="button">Clear</button>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
